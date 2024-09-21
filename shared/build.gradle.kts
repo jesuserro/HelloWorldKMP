@@ -34,3 +34,6 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
 }
+dependencies {
+    implementation(kotlin("script-runtime"))
+}
