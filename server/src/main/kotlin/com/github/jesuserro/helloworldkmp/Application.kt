@@ -12,9 +12,14 @@ fun main() {
 }
 
 fun Application.module() {
+
+    val repository = InMemoryCountryRepository()
+
     routing {
         get("/") {
             // call.respondText("Ktor: ${Greeting().greet()}")
+
+            val countries = repository.getCountries()
 
             // Show a list of countries in JSON prettify format
             call.respondText(
