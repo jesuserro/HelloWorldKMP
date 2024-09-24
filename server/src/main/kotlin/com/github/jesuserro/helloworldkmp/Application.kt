@@ -15,8 +15,13 @@ fun Application.module() {
     routing {
         get("/") {
             // call.respondText("Ktor: ${Greeting().greet()}")
-            call.respondText(countries.joinToString("\n") { it.name })
 
+            // Show a list of countries in JSON prettify format
+            call.respondText(
+                text = countries.joinToString(prefix = "[\n", postfix = "\n]", separator = ",\n") {
+                    "  { \"name\": \"${it.name}\", \"code\": \"${it.code}\", \"emoji\": \"${it.emoji}\" }"
+                }
+            )
         }
     }
 }
