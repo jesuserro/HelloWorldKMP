@@ -16,6 +16,7 @@ fun Application.module() {
         get("/") {
             // call.respondText("Ktor: ${Greeting().greet()}")
             call.respondText(countries.joinToString("\n") { it.name })
+
         }
     }
 }
