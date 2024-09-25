@@ -4,6 +4,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -20,6 +22,18 @@ import helloworldkmp.composeapp.generated.resources.compose_multiplatform
 @Preview
 fun App() {
     MaterialTheme {
+
+        val countries by produceState(initialValue = emptyList<Country>()) {
+            val repository = InMemoryCountryRepository()
+            value = repository.getCountries()
+        }
+
+        LazyColumn {
+            items(countries) { country ->
+                Text(country.name)
+            }
+        }
+
         var showContent by remember { mutableStateOf(false) }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = { showContent = !showContent }) {
@@ -33,5 +47,6 @@ fun App() {
                 }
             }
         }
+
     }
 }

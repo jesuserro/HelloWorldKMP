@@ -20,7 +20,5 @@ class InMemoryCountryRepository: CountryRepository {
         Country("Russia", "RU", "🇷🇺")
     )
 
-    override fun getCountries(): List<Country> {
-        return countries
-    }
+    override suspend fun getCountries(): List<Country> = countries
 }

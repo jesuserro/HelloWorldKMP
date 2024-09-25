@@ -22,6 +22,17 @@ kotlin {
             // put your Multiplatform dependencies here
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.server.content.negotiation)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+        }
+
+        jvmMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
         }
     }
 }
