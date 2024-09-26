@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,7 +20,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import helloworldkmp.composeapp.generated.resources.Res
 import helloworldkmp.composeapp.generated.resources.compose_multiplatform
+import java.awt.SystemColor.text
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 @Preview
 fun App() {
@@ -28,9 +33,13 @@ fun App() {
             value = repository.getCountries()
         }
 
-        LazyColumn {
-            items(countries) { country ->
-                Text(country.name)
+        Scaffold {
+            LazyColumn {
+                items(countries) { country ->
+                    ListItem {
+                        Text("${country.emoji} ${country.name} (${country.code})")
+                    }
+                }
             }
         }
 
