@@ -28,17 +28,14 @@ import java.awt.SystemColor.text
 @Composable
 @Preview
 fun App() {
+    val countries by produceState(initialValue = emptyList<Country>()) {
+        val repository = InMemoryCountryRepository()
+        value = repository.getCountries()
+    }
+    val greeting = remember { Greeting().greet() }
+    var showContent by remember { mutableStateOf(false) }
+
     MaterialTheme {
-
-        val countries by produceState(initialValue = emptyList<Country>()) {
-            val repository = InMemoryCountryRepository()
-            value = repository.getCountries()
-        }
-
-        val greeting = remember { Greeting().greet() }
-
-        var showContent by remember { mutableStateOf(false) }
-
         Scaffold (
             topBar = {
                 TopAppBar(  title = { Text("${countries.size} countries") } )
@@ -67,6 +64,5 @@ fun App() {
                 }
             }
         }
-
     }
 }
