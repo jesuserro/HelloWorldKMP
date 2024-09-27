@@ -2,6 +2,8 @@ package com.github.jesuserro.helloworldkmp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.jesuserro.helloworldkmp.model.Country
+import com.github.jesuserro.helloworldkmp.repository.CountryRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
