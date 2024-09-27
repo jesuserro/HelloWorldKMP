@@ -7,8 +7,8 @@ import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
-
 
 fun main() {
     embeddedServer(Netty, port = SERVER_PORT, host = "0.0.0.0", module = Application::module)
@@ -18,7 +18,7 @@ fun main() {
 fun Application.module() {
 
     install(ContentNegotiation) {
-        json( Json {
+        json(Json {
             prettyPrint = true
             isLenient = true
         })
@@ -27,11 +27,10 @@ fun Application.module() {
     val repository = InMemoryCountryRepository()
 
     // Get the list of countries as a JSON response
-    val countries = repository.getCountries()
+    val countries = runBlocking { repository.getCountries() }
 
     routing {
         get("/") {
-
             // Respond with the list of countries in JSON format
             call.respond(countries)
         }
