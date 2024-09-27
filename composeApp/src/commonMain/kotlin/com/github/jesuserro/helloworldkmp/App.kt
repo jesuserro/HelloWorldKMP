@@ -22,7 +22,6 @@ import helloworldkmp.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-// Separar la lógica de inicialización en esta función
 @Composable
 fun appState(): Triple<List<Country>, String, MutableState<Boolean>> {
     val countries by produceState<List<Country>>(initialValue = emptyList()) {
@@ -30,9 +29,8 @@ fun appState(): Triple<List<Country>, String, MutableState<Boolean>> {
         value = repository.getCountries()
     }
     val greeting = remember { Greeting().greet() }
-    var showContent = remember { mutableStateOf(false) }
+    val showContent = remember { mutableStateOf(false) }
 
-    // Devolver los valores en un triple para mantener todo compacto y reutilizable
     return Triple(countries, greeting, showContent)
 }
 
@@ -40,7 +38,6 @@ fun appState(): Triple<List<Country>, String, MutableState<Boolean>> {
 @Composable
 @Preview
 fun App() {
-    // Usamos la función appState() para obtener los valores de la lógica
     val (countries, greeting, showContent) = appState()
 
     MaterialTheme {
@@ -57,7 +54,6 @@ fun App() {
                 }
             }
 
-            // Contenido adicional fuera del Scaffold, animado con botón
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(onClick = { showContent.value = !showContent.value }) {
                     Text("Click me!")
