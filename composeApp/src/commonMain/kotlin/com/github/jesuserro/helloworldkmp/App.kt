@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.jesuserro.helloworldkmp.repository.InMemoryCountryRepository
+import com.github.jesuserro.helloworldkmp.viewmodel.CountryViewModel
+import com.github.jesuserro.helloworldkmp.viewmodel.CountryViewModelFactory
 import helloworldkmp.composeapp.generated.resources.Res
 import helloworldkmp.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
@@ -19,7 +21,8 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun App(viewModel: CountryViewModel = viewModel(factory = CountryViewModelFactory(
     InMemoryCountryRepository()
-))) {
+)
+)) {
     val countries by viewModel.countries.collectAsState()
     val greeting by viewModel.greeting.collectAsState()
     val showContent by viewModel.showContent.collectAsState()

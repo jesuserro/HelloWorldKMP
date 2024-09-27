@@ -1,4 +1,4 @@
-package com.github.jesuserro.helloworldkmp
+package com.github.jesuserro.helloworldkmp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
