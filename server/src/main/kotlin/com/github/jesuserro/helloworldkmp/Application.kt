@@ -11,28 +11,18 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
 fun main() {
-    embeddedServer(Netty, port = SERVER_PORT, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
+    embeddedServer(Netty, port = SERVER_PORT, host = "0.0.0.0", module = Application::module).start(wait = true)
 }
 
 fun Application.module() {
-
     install(ContentNegotiation) {
-        json(Json {
-            prettyPrint = true
-            isLenient = true
-        })
+        json(Json { prettyPrint = true; isLenient = true })
     }
 
     val repository = InMemoryCountryRepository()
-
-    // Get the list of countries as a JSON response
     val countries = runBlocking { repository.getCountries() }
 
     routing {
-        get("/") {
-            // Respond with the list of countries in JSON format
-            call.respond(countries)
-        }
+        get("/") { call.respond(countries) }
     }
 }

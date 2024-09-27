@@ -2,9 +2,7 @@ package com.github.jesuserro.helloworldkmp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class CountryViewModel(private val repository: CountryRepository) : ViewModel() {
@@ -18,9 +16,7 @@ class CountryViewModel(private val repository: CountryRepository) : ViewModel() 
     val showContent: StateFlow<Boolean> = _showContent.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            _countries.value = repository.getCountries()
-        }
+        viewModelScope.launch { _countries.value = repository.getCountries() }
     }
 
     fun toggleShowContent() {
