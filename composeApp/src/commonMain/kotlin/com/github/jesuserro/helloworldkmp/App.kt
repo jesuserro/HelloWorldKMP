@@ -17,28 +17,17 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import helloworldkmp.composeapp.generated.resources.Res
 import helloworldkmp.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-
-@Composable
-fun appState(): Triple<List<Country>, String, MutableState<Boolean>> {
-    val countries by produceState<List<Country>>(initialValue = emptyList()) {
-        val repository = InMemoryCountryRepository()
-        value = repository.getCountries()
-    }
-    val greeting = remember { Greeting().greet() }
-    val showContent = remember { mutableStateOf(false) }
-
-    return Triple(countries, greeting, showContent)
-}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-@Preview
-fun App() {
-    val (countries, greeting, showContent) = appState()
+fun App(viewModel: CountryViewModel = viewModel(factory = CountryViewModelFactory(InMemoryCountryRepository()))) {
+    val countries by viewModel.countries.collectAsState()
+    val greeting by viewModel.greeting.collectAsState()
+    val showContent by viewModel.showContent.collectAsState()
 
     MaterialTheme {
         Scaffold(
@@ -55,10 +44,10 @@ fun App() {
             }
 
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = { showContent.value = !showContent.value }) {
+                Button(onClick = { viewModel.toggleShowContent() }) {
                     Text("Click me!")
                 }
-                AnimatedVisibility(showContent.value) {
+                AnimatedVisibility(showContent) {
                     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                         Image(painterResource(Res.drawable.compose_multiplatform), null)
                         Text("Compose: $greeting")
